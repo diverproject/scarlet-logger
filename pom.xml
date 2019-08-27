@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.diverproject</groupId>
+	<artifactId>scarlet-logger</artifactId>
+	<version>0.1.0-ALPHA</version>
+	<packaging>jar</packaging>
+
+	<name>scarlet-logger</name>
+	<description>A library to add a log system and enable specify how the log will works, on console, file and dispatch</description>
+	<url>http://scarlet.diverproject.org/logger</url>
+
+	<organization>
+		<name>Diver Proejct</name>
+		<url>https://diverproject.org</url>
+	</organization>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/diverproject/scarlet-base/issues</url>
+	</issueManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<junit.jupiter.versions>5.4.0</junit.jupiter.versions>
+		<junit.platform.versions>1.4.1</junit.platform.versions>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.versions}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.versions}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>${junit.platform.versions}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
