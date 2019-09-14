@@ -49,6 +49,11 @@
 
 # Logs
 
+## 2019-09-14
+
+### 0.1.0.2
+- Update eclipse project settings.
+
 ## 2019-08-27
 
 ### 0.1.0.1
