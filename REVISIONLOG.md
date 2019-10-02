@@ -49,6 +49,11 @@
 
 # Logs
 
+## 2019-10-01
+
+### 0.1.0.3
+- Added LoggerLanguage as interface for DefaultLoggerLanguage.
+
 ## 2019-09-14
 
 ### 0.1.0.2
