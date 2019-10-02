@@ -51,6 +51,11 @@
 
 ## 2019-10-01
 
+### 0.1.0.4
+- Renamed ScarletLogger to ScarletLoggers.
+- Added Loggers to control Logger acquirement with a optional singleton implementation as ScarletLoggers.
+- Added MapLogger to store Logger instances with a default implementation as DefaultMapLoggers.
+
 ### 0.1.0.3
 - Added LoggerLanguage as interface for DefaultLoggerLanguage.
 

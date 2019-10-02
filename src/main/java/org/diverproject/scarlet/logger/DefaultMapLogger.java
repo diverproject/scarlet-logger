@@ -1,37 +1,36 @@
 package org.diverproject.scarlet.logger;
 
-import static org.diverproject.scarlet.logger.language.LoggerLanguage.ADD_DEFAULT_LOGGER;
+import static org.diverproject.scarlet.logger.language.LoggerLanguage.DEFAULT_CLASS_LOGGER;
+import static org.diverproject.scarlet.logger.language.LoggerLanguage.LOGGER_CONSTRUCTOR;
 import static org.diverproject.scarlet.logger.language.LoggerLanguage.LOGGER_NEW_INSTANCE;
 import static org.diverproject.scarlet.logger.language.LoggerLanguage.LOGGER_NOT_FOUND;
 import static org.diverproject.scarlet.logger.language.LoggerLanguage.SCARLET_LOGGER_CLOSE;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.diverproject.scarlet.ScarletRuntimeException;
-import org.diverproject.scarlet.logger.abstraction.DefaultLogger;
 import org.diverproject.scarlet.util.ArrayUtils;
 import org.diverproject.scarlet.util.StringUtils;
 
-public class ScarletLogger
+public class DefaultMapLogger<L extends Logger> implements MapLogger<L>
 {
-	private static final ScarletLogger INSTANCE = new ScarletLogger();
 	public static final String DEFAULT_LOGGER_NAME = "default";
 
-	private Map<String, Logger> loggers;
+	private Map<String, L> loggers;
 	private boolean instanceNewLoggers;
-	private Class<? extends Logger> defaultClassLogger;
+	private Class<? extends L> defaultClassLogger;
 
-	private ScarletLogger()
+	public DefaultMapLogger()
 	{
 		this.loggers = new TreeMap<>();
 		this.setInstanceNewLoggers(false);
-		this.setDefaultClassLogger(DefaultLogger.class);
 	}
 
+	@Override
 	public boolean isInstanceNewLoggers()
 	{
 		return this.instanceNewLoggers;
@@ -42,24 +41,19 @@ public class ScarletLogger
 		this.instanceNewLoggers = instanceNewLoggers;
 	}
 
-	public Class<? extends Logger> getDefaultClassLogger()
+	@Override
+	public Class<? extends L> getDefaultClassLogger()
 	{
 		return this.defaultClassLogger;
 	}
 
-	public void setDefaultClassLogger(Class<? extends Logger> defaultClassLogger)
+	public void setDefaultClassLogger(Class<? extends L> defaultClassLogger)
 	{
 		this.defaultClassLogger = defaultClassLogger;
 	}
 
-	@SuppressWarnings("resource")
-	public void addDefaultLogger()
-	{
-		if (!this.add(new DefaultLogger(DEFAULT_LOGGER_NAME)))
-			throw new ScarletRuntimeException(ADD_DEFAULT_LOGGER, DEFAULT_LOGGER_NAME);
-	}
-
-	public boolean add(Logger logger)
+	@Override
+	public boolean add(L logger)
 	{
 		synchronized (this.loggers)
 		{
@@ -70,19 +64,30 @@ public class ScarletLogger
 		}
 	}
 
-	public Logger get(String name) throws LoggerRuntimeException
+	@Override
+	public L get(String name) throws LoggerRuntimeException
 	{
-		Logger logger = this.loggers.get(name);
+		L logger = this.loggers.get(name);
 
 		if (logger == null)
 			if (this.isInstanceNewLoggers())
-			{
 				try {
-					logger = this.getDefaultClassLogger().getDeclaredConstructor(String.class).newInstance(name);
+
+					Class<? extends L> classz = this.getDefaultClassLogger();
+
+					if (classz == null)
+						throw new LoggerRuntimeException(DEFAULT_CLASS_LOGGER);
+
+					Constructor<? extends L> constructor = classz.getDeclaredConstructor(String.class);
+
+					if (constructor == null)
+						throw new LoggerRuntimeException(LOGGER_CONSTRUCTOR, this.getDefaultClassLogger().getName());
+
+					logger = constructor.newInstance(name);
+
 				} catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException e) {
 					throw new LoggerRuntimeException(e, LOGGER_NEW_INSTANCE, name, this.getDefaultClassLogger().getName());
 				}
-			}
 
 		if (logger == null)
 			throw new LoggerRuntimeException(LOGGER_NOT_FOUND, name);
@@ -90,31 +95,43 @@ public class ScarletLogger
 		return logger;
 	}
 
+	@Override
 	public boolean remove(Logger logger)
 	{
 		return this.loggers.remove(logger.getName()) != null;
 	}
 
+	@Override
 	public boolean remove(String name)
 	{
 		return this.loggers.remove(name) != null;
 	}
 
+	@Override
 	public boolean contains(Logger logger)
 	{
 		return this.loggers.containsValue(logger);
 	}
 
-	public boolean containsKey(String name)
+	@Override
+	public boolean contains(String name)
 	{
 		return this.loggers.containsKey(name);
 	}
 
+	@Override
 	public boolean hasAvaiableName(String name)
 	{
 		return !this.loggers.containsKey(name);
 	}
 
+	@Override
+	public Set<String> names()
+	{
+		return this.loggers.keySet();
+	}
+
+	@Override
 	public void clear()
 	{
 		this.loggers.values().forEach(logger -> {
@@ -127,29 +144,20 @@ public class ScarletLogger
 		this.loggers.clear();
 	}
 
+	@Override
 	public int size()
 	{
 		return this.loggers.size();
-	}
-
-	public static ScarletLogger getInstance()
-	{
-		return INSTANCE;
-	}
-
-	public Set<String> getLoggerNames()
-	{
-		return this.loggers.keySet();
 	}
 
 	@Override
 	public String toString()
 	{
 		return	StringUtils.objectToString(
-					this,
-					"instanceNewLoggers", this.isInstanceNewLoggers(),
-					"defaultClassLogger", this.getDefaultClassLogger(),
-					"loggers", ArrayUtils.join(String.class, this.getLoggerNames().iterator())
-				);
+			this,
+			"instanceNewLoggers", this.isInstanceNewLoggers(),
+			"defaultClassLogger", this.getDefaultClassLogger(),
+			"loggers", ArrayUtils.join(String.class, this.names().iterator())
+		);
 	}
 }

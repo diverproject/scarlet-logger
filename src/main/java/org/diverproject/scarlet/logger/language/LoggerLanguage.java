@@ -9,6 +9,8 @@ public enum LoggerLanguage implements Language
 	SCARLET_LOGGER_CLOSE	("failure on clear ScarletLogger (logger: %s)"),
 
 	LOGGER_NOT_FOUND		("logger not found (name: %s)"),
+	DEFAULT_CLASS_LOGGER	("none default class logger setted to new instances"),
+	LOGGER_CONSTRUCTOR		("logger implementation need a constructor that receive String as logger name (loggerClass: %s)"),
 	LOGGER_NEW_INSTANCE		("failure on create a new instance (name: %s, className: %s)"),
 	ADD_DEFAULT_LOGGER		("default logger already registered (name: %s)"),
 	OFFSET_TRACE			("invalid offset trace (offsetTrace: %d)"),
