@@ -1,5 +1,9 @@
 package org.diverproject.scarlet.logger;
 
+import static org.diverproject.scarlet.logger.language.LoggerLanguage.NEW_LOGGER_LANGUAGE;
+
+import java.lang.reflect.InvocationTargetException;
+
 import org.diverproject.scarlet.util.ArrayUtils;
 import org.diverproject.scarlet.util.StringUtils;
 
@@ -10,9 +14,19 @@ public class ScarletLoggers implements Loggers<LoggerLanguage>
 
 	private MapLogger<LoggerLanguage> mapLogger;
 
-	public ScarletLoggers()
+	private ScarletLoggers()
 	{
 		this.mapLogger = new DefaultMapLogger<>();
+	}
+
+	public LoggerLanguage add(Class<? extends LoggerLanguage> loggerClass)
+	{
+		try {
+			LoggerLanguage loggerLanguage = loggerClass.getConstructor().newInstance();
+			return loggerLanguage;
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			throw new LoggerRuntimeException(e, NEW_LOGGER_LANGUAGE, loggerClass.getName());
+		}
 	}
 
 	@Override
@@ -44,7 +58,7 @@ public class ScarletLoggers implements Loggers<LoggerLanguage>
 		);
 	}
 
-	public static Loggers<LoggerLanguage> getInstance()
+	public static ScarletLoggers getInstance()
 	{
 		return INSTANCE;
 	}

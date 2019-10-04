@@ -49,6 +49,13 @@
 
 # Logs
 
+## 2019-10-04
+
+### 0.1.1.5
+- Fixed ScarletLoggers constructor as private (Singleton).
+- Changed getInstance() return type of 'Loggers<LoggerLanguage>' to 'ScarletLoggers' on ScarletLoggers.
+- Added method to add new logger instances on ScarletLoggers.
+
 ## 2019-10-01
 
 ### 0.1.0.4
