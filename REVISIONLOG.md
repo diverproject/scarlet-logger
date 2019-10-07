@@ -51,6 +51,9 @@
 
 ## 2019-10-07
 
+### 0.1.1.7
+- Changed project java version of 13 to 10.
+
 ### 0.1.1.6
 - Change project settings of Eclipse to IntelliJ.
 
