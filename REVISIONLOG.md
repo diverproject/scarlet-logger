@@ -49,6 +49,11 @@
 
 # Logs
 
+## 2019-10-07
+
+### 0.1.1.6
+- Change project settings of Eclipse to IntelliJ.
+
 ## 2019-10-04
 
 ### 0.1.1.5
