@@ -8,12 +8,12 @@
 	<version>0.1.0-ALPHA</version>
 	<packaging>jar</packaging>
 
-	<name>scarlet-logger</name>
+	<name>Scarlet Logger</name>
 	<description>A library to add a log system and enable specify how the log will works, on console, file and dispatch</description>
 	<url>http://scarlet.diverproject.org/logger</url>
 
 	<organization>
-		<name>Diver Proejct</name>
+		<name>Diver Project</name>
 		<url>https://diverproject.org</url>
 	</organization>
 
@@ -23,12 +23,21 @@
 	</issueManagement>
 
 	<properties>
+		<java.version>10</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<junit.jupiter.versions>5.4.0</junit.jupiter.versions>
 		<junit.platform.versions>1.4.1</junit.platform.versions>
+		<maven.build.version>3.1</maven.build.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.diverproject</groupId>
+			<artifactId>scarlet-base</artifactId>
+			<version>0.1.0-ALPHA</version>
+			<systemPath>${env.REPOSITORIES}\org.diverproject\scarlet\scarlet-base\pom.xml</systemPath>
+		</dependency>
+
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -48,4 +57,19 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.build.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

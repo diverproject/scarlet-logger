@@ -49,6 +49,14 @@
 
 # Logs
 
+## 2019-10-09
+
+### 0.1.2.7
+- Fixed maven pom settings on 'name', 'organization.name'.
+- Added 'scarlet-base' project as local repository dependency.
+- Added 'maven-compiler-plugin' as maven build option.
+- Updated intellij project settings.
+
 ## 2019-10-07
 
 ### 0.1.1.7
