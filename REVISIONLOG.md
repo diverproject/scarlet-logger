@@ -51,6 +51,9 @@
 
 ## 2019-10-12
 
+### 0.1.3.9
+- Fixed NEW_LOGGER_LANGUAGE on LoggerLanguage.
+
 ### 0.1.2.8
 - Added contains() on Loggers.
 

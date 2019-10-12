@@ -19,7 +19,7 @@ public enum LoggerLanguage implements Language
 	WRITE_FILE_CHANNEL		("failure on write to file channel (pathname: %s)"),
 	FEED_LINE_FILE_CHANNEL	("failure on feed a line to file channel (pathname: %s)"),
 
-	NEW_LOGGER_LANGUAGE		("failure on instance a new logger language from '%s' - reason: %s"),
+	NEW_LOGGER_LANGUAGE		("failure on instance a new logger language from '%s'"),
 
 	;
 
