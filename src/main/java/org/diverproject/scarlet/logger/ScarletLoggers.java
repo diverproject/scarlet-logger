@@ -25,7 +25,7 @@ public class ScarletLoggers implements Loggers<LoggerLanguage>
 		return this.mapLogger.contains(name);
 	}
 
-	public LoggerLanguage add(String name, Class<? extends LoggerLanguage> loggerClass)
+	public <T extends LoggerLanguage> T add(String name, Class<T> loggerClass)
 	{
 		try {
 			return loggerClass.getConstructor(String.class).newInstance(name);
