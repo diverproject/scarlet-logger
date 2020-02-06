@@ -5,7 +5,7 @@
 
 	<groupId>org.diverproject</groupId>
 	<artifactId>scarlet-logger</artifactId>
-	<version>0.1.0-ALPHA</version>
+	<version>0.1.0</version>
 	<packaging>jar</packaging>
 
 	<name>Scarlet Logger</name>
@@ -28,14 +28,15 @@
 		<junit.jupiter.versions>5.4.0</junit.jupiter.versions>
 		<junit.platform.versions>1.4.1</junit.platform.versions>
 		<maven.build.version>3.1</maven.build.version>
+		<scarlet.version>0.1.0</scarlet.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.diverproject</groupId>
 			<artifactId>scarlet-base</artifactId>
-			<version>0.1.0-ALPHA</version>
-			<systemPath>${env.REPOSITORIES}\org.diverproject\scarlet\scarlet-base\pom.xml</systemPath>
+			<version>${scarlet.version}</version>
+			<systemPath>${env.REPOSITORIES}\org.diverproject\scarlet-base\pom.xml</systemPath>
 		</dependency>
 
 		<dependency>
@@ -59,6 +60,8 @@
 	</dependencies>
 
 	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
